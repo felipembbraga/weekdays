@@ -1,48 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-
+// Import some code we need
 import React, {AppRegistry, Component, StyleSheet, Text, View} from 'react-native';
+import DayItem from './src/day-item';
+var moment = require('moment');
+moment.locale('pt-BR');
 
-class weekdays extends Component {
+//Create a react component
+class Weekdays extends Component {
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.welcome}>
-          This is our first App!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        {this.days()}
       </View>
     );
   }
+
+  days() {
+    var dayItems = [];
+
+    for(let i = 0; i < 7; i++) {
+      let day = moment().add(i, 'days').format('dddd');
+      dayItems.push(<DayItem day={day} daysUntil={i}/>)
+    }
+
+    return dayItems;
+  }
+
 }
 
+// Style the react component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    justifyContent: 'center', // Moves stuff height wise when column
+    alignItems: 'center' //Moves stuff width wise when column
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
-  }
+  textStyle: {}
 });
 
-AppRegistry.registerComponent('weekdays', () => weekdays);
+// Show the react component on the screen
+AppRegistry.registerComponent('weekdays', () => Weekdays);
